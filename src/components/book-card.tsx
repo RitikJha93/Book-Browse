@@ -17,9 +17,10 @@ interface Books {
     already_read_count: number,
 }
 interface BookCardProps {
-    book: Books
+    book: Books;
+    home : boolean;
 }
-const BookCard = ({ book }: BookCardProps) => {
+const BookCard = ({ book,home }: BookCardProps) => {
 
     const navigate = useNavigate()
     const [searchParams] = useSearchParams()
@@ -30,9 +31,15 @@ const BookCard = ({ book }: BookCardProps) => {
             search: `?query=${query}`
         })
     }
+    const handleSearchRedirect = (query: string) => {
+        navigate({
+            pathname: `/search`,
+            search: `?query=${query}`
+        })
+    }
 
     return (
-        <Card onClick={() => handleRedirect(book.id)} key={book.id} className="py-4 group overflow-hidden cursor-pointer">
+        <Card onClick={() => home ? handleSearchRedirect(book.title) : handleRedirect(book.id)} key={book.id} className="py-4 group overflow-hidden cursor-pointer">
             <CardContent className="flex flex-col font-primary">
                 {
                     book.cover_img ?

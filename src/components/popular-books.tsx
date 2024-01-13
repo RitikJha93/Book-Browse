@@ -21,7 +21,7 @@ const PopularBooks = () => {
                     <CarouselContent>
                         {popularBooks.map((book, index) => (
                             <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3 xl:basis-1/4">
-                                <BookCard book={book} />
+                                <BookCard home={true} book={book} />
                             </CarouselItem>
                         ))}
                     </CarouselContent>
