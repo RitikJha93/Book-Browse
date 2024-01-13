@@ -49,7 +49,7 @@ const SearchPage = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5  gap-y-6 gap-x-5 mt-4 sm:mt-10">
               {booksData?.map((book, i) => {
                 return (
-                  <BookCard book={book} />
+                  <BookCard key={i} book={book} />
                 )
 
               })}

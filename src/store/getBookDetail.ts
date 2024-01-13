@@ -29,7 +29,6 @@ const useFetchBookDetail = create<BookDetailState>()((set) => {
         error: null,
         getBookDetail: async (id: string) => {
             set({ loading: true })
-            const { book } = useFetchBookDetail.getState()
             set({ book: null })
             try {
                 const { data } = await axios.get(`${import.meta.env.VITE_SEARCH_URL}/works/${id}.json`)

@@ -1,4 +1,4 @@
-import { DoorClosed, FolderClosed, LogOut, SearchIcon, UserCircle2Icon, X } from "lucide-react"
+import { LogOut, SearchIcon, UserCircle2Icon, X } from "lucide-react"
 import Logo from "./logo"
 import { Button } from "./ui/button"
 import { Input } from "./ui/input"
@@ -16,8 +16,6 @@ import useFetchBooks from "@/store/getBooks"
 import { useNavigate } from "react-router-dom"
 import { ModeToggle } from "./mode-toggle"
 import useSearchSuggestion from "@/store/searchSuggestion"
-import { debounce } from 'lodash'
-import { getServers } from "dns"
 import SearchLoading from "./search-loading"
 const Navbar = () => {
 
