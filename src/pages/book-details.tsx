@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button"
 import useFetchBookDetail from "@/store/getBookDetail"
-import { ArrowLeft } from "lucide-react"
+import { ArrowLeft, IndianRupee } from "lucide-react"
 import { useEffect } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import alternateImage from '../assets/alternate.jpg'
 import { Rating } from '@smastrom/react-rating';
 import BooksDetailLoading from "@/components/books-detail-loading"
@@ -38,47 +38,10 @@ const BookDetails = () => {
             <div className="flex flex-col space-y-2 w-full md:w-2/3">
               <h1 className="font-bold text-2xl font-primary">{book?.title}</h1>
               <p className="text-muted-foreground font-primary">{book?.description}</p>
-              <div>
-                <p className="font-primary font-semibold text-primary text-lg">Subject Places</p>
-                {
-                  book?.subjectPlaces != undefined && book.subjectPlaces.length > 0 ?
-                    <p className="text-muted-foreground font-primary">{book?.subjectPlaces.join(',')}</p> :
-                    <p className="text-muted-foreground font-primary">Not Available</p>
-                }
-              </div>
-              <div>
-                <p className="font-primary font-semibold text-primary text-lg">Subject People</p>
-                <div className="flex overflow-x-auto space-x-2 wrapper">
-                  {
-                    book?.subjectPeople != undefined && book.subjectPeople.length > 0 ?
-                      book?.subjectPeople.map((people) => {
-                        return <div className="bg-secondary p-2 rounded-lg min-w-fit">
-                          <p>{people}</p>
-                        </div>
-                      }) :
-                      <p className="text-muted-foreground font-primary">Not Available</p>
 
-                  }
-                </div>
-              </div>
-              <div>
-                <p className="font-primary font-semibold text-primary text-lg">Subjects</p>
-                <div className="flex overflow-x-auto space-x-2 wrapper">
-                  {
-                    book?.subjects != undefined && book.subjects.length > 0 ?
-
-                      book?.subjects.map((people) => {
-                        return <div className="bg-secondary rounded-lg p-2 min-w-fit">
-                          <p>{people}</p>
-                        </div>
-                      }) :
-                      <p className="text-muted-foreground font-primary">Not Available</p>
-
-                  }
-                </div>
-              </div>
 
               <p className="font-primary text-primary font-semibold text-lg">First Publish Date : <span className="font-primary font-light text-base text-muted-foreground">{book?.first_publish_date}</span></p>
+              <p className="font-primary text-primary font-semibold text-lg">Number of Pages : <span className="font-primary font-light text-base text-muted-foreground">{book?.pageCount}</span></p>
 
               <div>
                 <p className="font-primary text-primary font-semibold text-lg">Rating</p>
@@ -92,6 +55,27 @@ const BookDetails = () => {
 
                   <p className="font-light text-muted-foreground font-primary">{book?.average_rating.toFixed(2)} rating From {book?.count} reviewers</p>
                 </div>
+              </div>
+              <p className="font-primary text-primary inline-flex space-x-2 font-semibold text-lg">Price :
+                <span className="font-primary flex items-center ml-1 font-light text-base text-muted-foreground">
+                  {
+                    typeof(book?.price) === "number" && <IndianRupee />
+                  }
+                  {book?.price}
+                </span>
+              </p>
+
+              <div className="flex gap-x-2 mt-4">
+                <a href={book?.buyLink ?? ""} target="_blank">
+                  <Button className="text-white font-primary font-semibold">
+                    Buy
+                  </Button>
+                </a>
+                <a href={book?.previewLink ?? ""} target="_blank">
+                  <Button className="text-white font-primary font-semibold">
+                    Preview
+                  </Button>
+                </a>
               </div>
             </div>
           </div>

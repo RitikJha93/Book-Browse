@@ -20,11 +20,11 @@ const useSearchSuggestion = create<searchSuggestionState>()((set) => {
         getSearchData: async (query: string) => {
             set({ loading: true })
             try {
-                const { data } = await axios.get(`${import.meta.env.VITE_SEARCH_URL}/search.json?q=${query}&limit=10`);
-                const finalData = data.docs.map((doc: any) => {
+                const { data } = await axios.get(`${import.meta.env.VITE_SEARCH_URL}?q=${query}&key=${import.meta.env.VITE_API_KEY}`);
+                const finalData = data.items.map((doc: any) => {
                     return {
-                        id: doc.key.replace('/works',''),
-                        title: doc.title,
+                        id: doc.id,
+                        title: doc.volumeInfo.title,
                     }
                 })
                 set({ searchData: finalData })

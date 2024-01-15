@@ -23,7 +23,7 @@ const SearchPage = () => {
     resetOffset()
     resetBooksData()
     getBooks(query)
-  }, [])
+  }, [query])
 
   console.log(booksData)
   return (

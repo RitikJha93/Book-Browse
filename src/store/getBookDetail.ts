@@ -5,14 +5,15 @@ interface BookDetail {
     id: string;
     description: string;
     title: string;
-    covers: number[];
-    subjectPlaces: string[];
-    subjectPeople: string[];
-    subjects: string[];
+    authors: string[];
     first_publish_date: string;
     cover_img: string;
     average_rating: number;
     count: number;
+    pageCount: number;
+    previewLink: string;
+    price: number;
+    buyLink: string;
 }
 
 interface BookDetailState {
@@ -31,20 +32,22 @@ const useFetchBookDetail = create<BookDetailState>()((set) => {
             set({ loading: true })
             set({ book: null })
             try {
-                const { data } = await axios.get(`${import.meta.env.VITE_SEARCH_URL}/works/${id}.json`)
-                const { data: ratingData } = await axios.get(`${import.meta.env.VITE_SEARCH_URL}/works/${id}/ratings.json`)
+                const { data } = await axios.get(`${import.meta.env.VITE_SEARCH_URL}/${id}`)
+                const { title, authors, publishedDate, imageLinks, pageCount, previewLink, description, averageRating, ratingsCount } = data.volumeInfo
+
                 const bookDetailData = {
-                    id: data.key.replace('/works', ""),
-                    description: data.description && data.description.value ? data.description.value : data.description ? data.description : "No Description Found for this book",
-                    title: data.title,
-                    covers: data.covers,
-                    subjectPlaces: data.subject_places ?? [],
-                    subjectPeople: data.subject_people ?? [],
-                    subjects: data.subjects ?? [],
-                    first_publish_date: data.first_publish_date ?? "Not Available",
-                    cover_img: data.covers && data.covers[0] ? `https://covers.openlibrary.org/b/id/${data.covers[0]}-L.jpg` : "",
-                    average_rating: ratingData.summary.average ?? 0,
-                    count: ratingData.summary.count,
+                    id: data.id,
+                    description: description ?? "No Description Found for this book",
+                    authors: authors,
+                    title: title,
+                    first_publish_date: publishedDate ?? "Not Available",
+                    cover_img: imageLinks?.thumbnail ?? "",
+                    average_rating: averageRating ?? 0,
+                    count: ratingsCount,
+                    pageCount: pageCount,
+                    previewLink: previewLink,
+                    price: data?.saleInfo?.listPrice?.amount ?? "Not Available",
+                    buyLink: data.saleInfo.buyLink,
                 }
                 set({ book: bookDetailData })
                 set({ loading: false })

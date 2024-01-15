@@ -39,6 +39,7 @@ const Navbar = () => {
             pathname: '/search',
             search: `?query=${searchInput}`
         })
+        setOpenSuggestion(false)
     }
 
     const navigate = useNavigate()
@@ -57,8 +58,9 @@ const Navbar = () => {
         };
     }, [searchResultRef])
 
+    console.log(searchData)
     return (
-        <div className="bg-light z-10 shrink-0 px-4 sm:px-6 md:px-10 lg:px-14 relative shadow-sm h-16">
+        <div className="bg-background fixed top-0 left-0 right-0 z-10 shrink-0 px-4 sm:px-6 md:px-10 lg:px-14 shadow-md h-16">
             <div className="flex relative items-center h-full justify-between">
                 <Logo />
                 <div className={`sm:relative md:min-w-[25rem] sm:min-w-[20rem] ${mobileSearchOpen ? 'absolute top-16 left-0 right-0' : "hidden sm:block"}`}>
@@ -73,10 +75,13 @@ const Navbar = () => {
                         >
                             {searchInput && searchData.length > 0 && !searchLoading ? (
                                 searchData.map((search) => (
-                                    <div onClick={() => navigate({
-                                        pathname: `/search`,
-                                        search: `?query=${search.title}`
-                                    })} key={search.id} className="py-1 px-2 cursor-pointer hover:bg-primary-foreground rounded-lg">
+                                    <div onClick={() =>{
+                                        navigate({
+                                            pathname: `/search`,
+                                            search: `?query=${search.title}`
+                                        })
+                                        setOpenSuggestion(false)
+                                    } } key={search.id} className="py-1 px-2 cursor-pointer hover:bg-primary-foreground rounded-lg">
                                         <h1 className="font-primary">{search.title}</h1>
                                     </div>
                                 ))
