@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button"
 import useFetchBookDetail from "@/store/getBookDetail"
 import { ArrowLeft, IndianRupee } from "lucide-react"
 import { useEffect } from "react"
-import { Link, useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import alternateImage from '../assets/alternate.jpg'
 import { Rating } from '@smastrom/react-rating';
 import BooksDetailLoading from "@/components/books-detail-loading"
